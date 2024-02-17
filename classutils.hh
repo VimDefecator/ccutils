@@ -18,12 +18,12 @@ public:
   template<typename... Args>                                \
   thisType &chainMethodName(Args&&... args) & {             \
     methodName(std::forward<Args>(args)...);                \
-    return (thisType &)*this;                               \
+    return *(thisType *)this;                               \
   }                                                         \
   template<typename... Args>                                \
   thisType &&chainMethodName(Args&&... args) && {           \
     methodName(std::forward<Args>(args)...);                \
-    return std::move((thisType &)*this);                    \
+    return std::move(*(thisType *)this);                    \
   }
 
 #define CHAIN_METHOD_AUTO(chainMethodName, methodName)  \
@@ -41,19 +41,19 @@ public:
 #define CHAIN_METHOD_FOR_TYPE(thisType, chainMethodName, methodName, type)  \
   thisType &chainMethodName(const type &arg) & {                            \
     methodName(arg);                                                        \
-    return (thisType &)*this;                                               \
+    return *(thisType *)this;                                               \
   }                                                                         \
   thisType &chainMethodName(type &&arg) & {                                 \
     methodName(std::move(arg));                                             \
-    return (thisType &)*this;                                               \
+    return *(thisType *)this;                                               \
   }                                                                         \
   thisType &&chainMethodName(const type &arg) && {                          \
     methodName(arg);                                                        \
-    return std::move((thisType &)*this);                                    \
+    return std::move(*(thisType *)this);                                    \
   }                                                                         \
   thisType &&chainMethodName(type &&arg) && {                               \
     methodName(std::move(arg));                                             \
-    return std::move((thisType &)*this);                                    \
+    return std::move(*(thisType *)this);                                    \
   }
 
 #define CHAIN_METHOD_FOR_TYPE_AUTO(chainMethodName, methodName, type) \
