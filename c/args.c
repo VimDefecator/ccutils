@@ -77,6 +77,17 @@ void argscanf(char **argv, const char *fmt, ...)
       if(*argp)
         strcpy(dst, *argp);
     }
+    else if(substr_eq_str(ss_type, "sn"))
+    {
+      char *dst;
+      size_t n;
+
+      dst = va_arg(va, char *);
+      n = va_arg(va, size_t);
+
+      if(*argp)
+        strncpy(dst, *argp, n);
+    }
   }
 
   va_end(va);
