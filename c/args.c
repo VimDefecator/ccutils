@@ -121,7 +121,7 @@ static bool parse_argdef(argdef_t *def, substr_t ss_argdef)
 static bool find_and_parse_argdef(argdef_t *def, const char *fmt, substr_t ss_name)
 {
     if (is_short_arg_name(ss_name)) {
-        foreach_substr(ss_argdef, fmt, '\\') {
+        foreach_str_split(ss_argdef, fmt, '\\') {
             if (!parse_argdef(def, ss_argdef)) {
                 break;
             }
@@ -130,7 +130,7 @@ static bool find_and_parse_argdef(argdef_t *def, const char *fmt, substr_t ss_na
             }
         }
     } else if (is_long_arg_name(ss_name)) {
-        foreach_substr(ss_argdef, fmt, '\\') {
+        foreach_str_split(ss_argdef, fmt, '\\') {
             if (!parse_argdef(def, ss_argdef)) {
                 break;
             }
@@ -216,7 +216,7 @@ bool argscanf(char **argv, const char *fmt, ...)
     va_list va;
     va_start(va, fmt);
 
-    foreach_substr(ss_argdef, fmt, '\\') {
+    foreach_str_split(ss_argdef, fmt, '\\') {
         argdef_t def;
         if (!parse_argdef(&def, ss_argdef)) {
             return false;
